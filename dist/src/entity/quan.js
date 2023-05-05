@@ -9,33 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Product = void 0;
+exports.Quan = void 0;
 const typeorm_1 = require("typeorm");
-const category_1 = require("./category");
-let Product = class Product {
+const city_1 = require("./city");
+const phuong_1 = require("./phuong");
+let Quan = class Quan {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Product.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 255 }),
-    __metadata("design:type", String)
-], Product.prototype, "name", void 0);
+], Quan.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Product.prototype, "price", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "text" }),
     __metadata("design:type", String)
-], Product.prototype, "image", void 0);
+], Quan.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => category_1.Category, (category) => { category.products; }),
-    __metadata("design:type", category_1.Category)
-], Product.prototype, "category", void 0);
-Product = __decorate([
+    (0, typeorm_1.ManyToOne)(() => city_1.City, (city) => city.quan),
+    __metadata("design:type", city_1.City)
+], Quan.prototype, "city", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => phuong_1.Phuong, (phuong) => phuong.quan),
+    __metadata("design:type", Array)
+], Quan.prototype, "phuong", void 0);
+Quan = __decorate([
     (0, typeorm_1.Entity)()
-], Product);
-exports.Product = Product;
-//# sourceMappingURL=product.js.map
+], Quan);
+exports.Quan = Quan;
+//# sourceMappingURL=quan.js.map

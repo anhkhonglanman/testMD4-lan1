@@ -9,25 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Category = void 0;
+exports.Phuong = void 0;
 const typeorm_1 = require("typeorm");
-const product_1 = require("./product");
-let Category = class Category {
+const quan_1 = require("./quan");
+const house_1 = require("./house");
+let Phuong = class Phuong {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Category.prototype, "id", void 0);
+], Phuong.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Category.prototype, "name", void 0);
+], Phuong.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => product_1.Product, (product) => product.category),
+    (0, typeorm_1.ManyToOne)(() => quan_1.Quan, (quan) => quan.phuong),
+    __metadata("design:type", quan_1.Quan)
+], Phuong.prototype, "quan", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => house_1.House, (house) => house.phuong),
     __metadata("design:type", Array)
-], Category.prototype, "products", void 0);
-Category = __decorate([
+], Phuong.prototype, "house", void 0);
+Phuong = __decorate([
     (0, typeorm_1.Entity)()
-], Category);
-exports.Category = Category;
-//# sourceMappingURL=category.js.map
+], Phuong);
+exports.Phuong = Phuong;
+//# sourceMappingURL=phuong.js.map

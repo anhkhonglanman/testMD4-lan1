@@ -8,52 +8,49 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var User_1;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.House = void 0;
 const typeorm_1 = require("typeorm");
-const role_1 = require("./role");
+const image_1 = require("./image");
 const contract_1 = require("./contract");
-let User = User_1 = class User {
+const user_1 = require("./user");
+const phuong_1 = require("./phuong");
+let House = class House {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], House.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 255 }),
-    __metadata("design:type", String)
-], User.prototype, "name", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], House.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], User.prototype, "phoneNumber", void 0);
+], House.prototype, "price", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 255 }),
+    (0, typeorm_1.Column)({ type: "varchar", length: 300 }),
     __metadata("design:type", String)
-], User.prototype, "address", void 0);
+], House.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 255 }),
-    __metadata("design:type", String)
-], User.prototype, "username", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: "varchar", length: 255 }),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(() => role_1.Role, (role) => role.users),
-    __metadata("design:type", Number)
-], User.prototype, "role", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => contract_1.Contract, (contract) => contract.user),
+    (0, typeorm_1.OneToMany)(() => image_1.Image, (image) => image.house),
     __metadata("design:type", Array)
-], User.prototype, "contract", void 0);
+], House.prototype, "image", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => User_1, (user) => user.house),
+    (0, typeorm_1.OneToMany)(() => contract_1.Contract, (contract) => contract.house),
     __metadata("design:type", Array)
-], User.prototype, "house", void 0);
-User = User_1 = __decorate([
+], House.prototype, "contract", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_1.User, (user) => user.house),
+    __metadata("design:type", user_1.User)
+], House.prototype, "user", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => phuong_1.Phuong, (phuong) => phuong.house),
+    __metadata("design:type", phuong_1.Phuong)
+], House.prototype, "phuong", void 0);
+House = __decorate([
     (0, typeorm_1.Entity)()
-], User);
-exports.User = User;
-//# sourceMappingURL=user.js.map
+], House);
+exports.House = House;
+//# sourceMappingURL=house.js.map
