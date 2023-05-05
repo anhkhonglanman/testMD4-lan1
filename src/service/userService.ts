@@ -11,6 +11,9 @@ class UserService {
         let userFind = await this.userRepository.find({username: user.username, password: user.password})
         return userFind
     }
+    creatUser = async () => {
+
+    }
 }
 
 export default new UserService();
