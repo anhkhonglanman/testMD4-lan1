@@ -7,12 +7,9 @@ class UserService {
         this.userRepository = AppDataSource.getRepository(User)
     }
 
-    checkUser = async (user) => {
-        let userFind = await this.userRepository.find({username: user.username, password: user.password})
-        return userFind
-    }
-    creatUser = async () => {
-
+    createUser = async (user) => {
+        let newUser = await this.userRepository.save(user)
+        return newUser
     }
 }
 
