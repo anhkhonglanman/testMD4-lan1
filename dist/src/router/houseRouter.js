@@ -7,5 +7,6 @@ const express_1 = require("express");
 const houseController_1 = __importDefault(require("../controller/houseController"));
 const houseRouter = (0, express_1.Router)();
 houseRouter.get('/', houseController_1.default.showAllHouse);
+houseRouter.post('/', houseController_1.default.createHouse);
 exports.default = houseRouter;
 //# sourceMappingURL=houseRouter.js.map

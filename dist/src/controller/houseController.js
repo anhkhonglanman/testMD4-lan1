@@ -12,6 +12,11 @@ class HouseController {
             console.log(house);
             res.status(201).json(house);
         };
+        this.createHouse = async (req, res) => {
+            let newHouse = await houseService_1.default.createHouse(req.body);
+            console.log(newHouse);
+            res.status(201).json(newHouse);
+        };
     }
 }
 exports.default = new HouseController();

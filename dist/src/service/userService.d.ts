@@ -3,7 +3,7 @@ declare class UserService {
     private userRepository;
     constructor();
     createUser: (user: any) => Promise<User>;
-    checkUser: (user: any) => Promise<any>;
+    checkUser: (user: any) => Promise<string>;
     findUserById: (userId: any) => Promise<any>;
     updateUser: (id: any, user: any) => Promise<void>;
 }

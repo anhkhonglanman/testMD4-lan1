@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const data_source_1 = require("../data-source");
 const user_1 = require("../entity/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const auth_1 = require("../middleware/auth");
 class UserService {
     constructor() {
         this.createUser = async (user) => {
@@ -26,7 +28,29 @@ class UserService {
                     username: user.username,
                 }
             });
-            return userFind;
+            if (userFind) {
+                if (userFind) {
+                    let pass = await bcrypt_1.default.compare(user.password, userFind.password);
+                    if (pass) {
+                        let payload = {
+                            id: user.id,
+                            username: user.name
+                        };
+                        return jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {
+                            expiresIn: 36000 * 10 * 100
+                        });
+                    }
+                    else {
+                        return 'khong dung pass';
+                    }
+                }
+                else {
+                    return 'khong dung pass';
+                }
+            }
+            else {
+                return 'khong dung tai khoan hoac mat khau';
+            }
         };
         this.findUserById = async (userId) => {
             let userFind = await this.userRepository.findOneBy({

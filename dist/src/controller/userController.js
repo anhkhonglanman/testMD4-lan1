@@ -28,6 +28,11 @@ class UserController {
             let newUser = await userService_1.default.updateUser(id, user);
             res.status(201).json(newUser);
         };
+        this.login = async (req, res) => {
+            let userData = req.body;
+            let user = await userService_1.default.checkUser(userData);
+            res.status(200).json(user);
+        };
     }
 }
 exports.default = new UserController();
