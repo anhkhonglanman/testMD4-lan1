@@ -23,26 +23,31 @@ class UserService {
             return newUser;
         };
         this.checkUser = async (user) => {
-            let userFind = await this.userRepository.findOne({
-                where: {
-                    username: user.username,
-                }
-            });
-            if (userFind) {
-                if (userFind) {
-                    let pass = await bcrypt_1.default.compare(user.password, userFind.password);
-                    if (pass) {
-                        let payload = {
-                            id: user.id,
-                            username: user.name
+            let userFind = await this.userRepository.query(`select *
+                                                        from user
+                                                        where username = "${user.username}"`);
+            let usserFinds = userFind[0];
+            if (usserFinds) {
+                let pass = await bcrypt_1.default.compare(user.password, usserFinds.password);
+                if (pass) {
+                    let payload;
+                    if (usserFinds.role === 1) {
+                        payload = {
+                            id: usserFinds.id,
+                            username: user.username,
+                            role: "client"
                         };
-                        return jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {
-                            expiresIn: 36000 * 10 * 100
-                        });
                     }
                     else {
-                        return 'khong dung pass';
+                        payload = {
+                            id: usserFinds.id,
+                            username: user.username,
+                            role: "owner"
+                        };
                     }
+                    return jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {
+                        expiresIn: 36000 * 10 * 100
+                    });
                 }
                 else {
                     return 'khong dung pass';
@@ -59,9 +64,15 @@ class UserService {
             return userFind;
         };
         this.updateUser = async (id, user) => {
-            console.log(user);
-            console.log(id);
             await this.userRepository.update({ id: id }, user);
+        };
+        this.checkUsersignup = async (user) => {
+            let userFind = await this.userRepository.findOne({
+                where: {
+                    username: user.username,
+                }
+            });
+            return userFind;
         };
         this.userRepository = data_source_1.AppDataSource.getRepository(user_1.User);
     }

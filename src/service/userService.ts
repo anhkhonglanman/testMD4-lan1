@@ -25,31 +25,36 @@ class UserService {
         return newUser
     }
     checkUser = async (user) => {
-        let userFind = await this.userRepository.findOne({
-            where: {
-                username: user.username,
-                // password: user.password
-            }
-        });
-        if (userFind) {
-            if (userFind) {
-                // let pass = await bcrypt.compare(userData.password, user.password)
-                let pass = await bcrypt.compare(user.password, userFind.password)
-                if (pass) {
-                   let  payload = {
-                        id: user.id,
-                        username: user.name
+        let userFind = await this.userRepository.query(`select *
+                                                        from user
+                                                        where username = "${user.username}"`)
+        let usserFinds = userFind[0]
+        if (usserFinds) {
+            let pass = await bcrypt.compare(user.password, usserFinds.password);
+            if (pass) {
+                let payload ;
+                if (usserFinds.role === 1) {
+                     payload = {
+                        id: usserFinds.id,
+                        username: user.username,
+                        role: "client"
                     }
-                    return jwt.sign(payload, SECRET, {
-                        expiresIn: 36000 * 10 * 100
-                    })
                 } else {
-                    return 'khong dung pass';
+                     payload = {
+                        id: usserFinds.id,
+                        username: user.username,
+                        role: "owner"
+                    }
+
                 }
+                return jwt.sign(payload, SECRET, {
+                    expiresIn: 36000 * 10 * 100
+                })
             } else {
                 return 'khong dung pass';
             }
-        }else {
+
+        } else {
             return 'khong dung tai khoan hoac mat khau'
         }
     }
@@ -58,24 +63,19 @@ class UserService {
         let userFind = await this.userRepository.findOneBy({
             id: userId
         })
-        // let user1 = AppDataSource.createQueryBuilder()
-        //     .select("user")
-        //     .from(User, "user")
-        //     .where("user.id = :id", {id: userId})
-        //     .getOne()
         return userFind;
     }
     updateUser = async (id, user) => {
-        console.log(user)
-        console.log(id)
-        // let newUser = new User();
-        // newUser.name=user.name;
-        // newUser.phoneNumber = user.phoneNumber;
-        // newUser.address = user.address;
-        // newUser.username = user.username;
-        // newUser.password = user.password;
-        // newUser.role = parseInt(user.role)
         await this.userRepository.update({id: id}, user);
+    }
+    checkUsersignup = async (user) => {
+        let userFind = await this.userRepository.findOne({
+            where: {
+                username: user.username,
+                // password: user.password
+            }
+        });
+        return userFind;
     }
 
 

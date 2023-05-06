@@ -7,7 +7,7 @@ import {SECRET} from "../middleware/auth";
 class UserController {
 
     signup = async (req: Request, res: Response) => {
-        let check = await userService.checkUser(req.body)
+        let check = await userService.checkUsersignup(req.body)
         if (!check) {
             let newUser = await userService.createUser(req.body);
             res.status(201).json(newUser);
@@ -34,10 +34,12 @@ class UserController {
     login = async (req: Request, res: Response) => {
         let userData = req.body;
         let user = await userService.checkUser(userData);
+        console.log(user)
         res.status(200).json(user);
 
 
     }
+
 }
 
 export default new UserController();

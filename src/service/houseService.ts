@@ -3,32 +3,34 @@ import {House} from "../entity/house";
 import bcrypt from "bcrypt";
 import {User} from "../entity/user";
 import jwt from "jsonwebtoken";
- class HouseService {
-    private  houseRepository;
+import {Request, Response} from "express";
+
+class HouseService {
+    private houseRepository;
+
     constructor() {
-        this.houseRepository=AppDataSource.getRepository(House);
+        this.houseRepository = AppDataSource.getRepository(House);
     }
-     findAllHouse = async () => {
 
-      let houses = await this.houseRepository.find()
-         console.log(houses)
-         return houses
-     }
-     createHouse = async (house) => {
+    findAllHouse = async () => {
 
-         // let newHouse = new House();
-         // newHouse.name=user.name;
-         // newUser.phoneNumber = user.phoneNumber;
-         // newUser.address = user.address;
-         // newUser.username = user.username;
-         // newUser.password = password;
-         // newUser.role = parseInt(user.role)
-         // await this.userRepository.save(newUser);
-         // return newUser
-
-     }
+        let houses = await this.houseRepository.find()
+        return houses
+    }
 
 
- }
+    // createHouse = async (house) => {
+    //     console.log(house)
+    //     let newHouse = new House();
+    //     newHouse.price = house.price;
+    //     newHouse.description = house.description;
+    //     newHouse.user = house.userid;
+    //     newHouse.phuong = house.phuong
+    //     newHouse.houseStatus = house.status;
+    //     await this.houseRepository.save(newHouse);
+    // }
 
- export default new HouseService()
+
+}
+
+export default new HouseService()
