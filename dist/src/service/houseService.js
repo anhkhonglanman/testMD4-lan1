@@ -5,7 +5,13 @@ const house_1 = require("../entity/house");
 class HouseService {
     constructor() {
         this.findAllHouse = async () => {
-            let houses = await this.houseRepository.find();
+            let houses = await this.houseRepository.find({
+                relations: {
+                    phuong: true,
+                    quan: true,
+                    city: true
+                }
+            });
             return houses;
         };
         this.addHouse = async (house, id) => {

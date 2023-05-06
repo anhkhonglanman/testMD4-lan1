@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.City = void 0;
 const typeorm_1 = require("typeorm");
 const quan_1 = require("./quan");
+const house_1 = require("./house");
 let City = class City {
 };
 __decorate([
@@ -26,6 +27,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => quan_1.Quan, (quan) => quan.city),
     __metadata("design:type", Array)
 ], City.prototype, "quan", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => house_1.House, (house) => house.city),
+    __metadata("design:type", Array)
+], City.prototype, "house", void 0);
 City = __decorate([
     (0, typeorm_1.Entity)()
 ], City);

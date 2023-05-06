@@ -1,6 +1,7 @@
 import {request, Request, Response} from "express";
 import houseService from "../service/houseService";
 import jwt from "jsonwebtoken";
+import {House} from "../entity/house";
 
 
 class HouseController {
@@ -35,6 +36,10 @@ class HouseController {
         let house= await houseService.delete(id);
         res.status(200).json(house)
     }
+    findHouse=async (req: Request, res: Response)=>{
+
+    }
+
 
 
 }

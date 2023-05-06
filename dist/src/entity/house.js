@@ -16,6 +16,8 @@ const contract_1 = require("./contract");
 const user_1 = require("./user");
 const phuong_1 = require("./phuong");
 const housestatus_1 = require("./housestatus");
+const quan_1 = require("./quan");
+const city_1 = require("./city");
 let House = class House {
 };
 __decorate([
@@ -50,6 +52,14 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => housestatus_1.HouseStatus, (houseStatus) => houseStatus.house),
     __metadata("design:type", housestatus_1.HouseStatus)
 ], House.prototype, "houseStatus", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => quan_1.Quan, (quan) => quan.House),
+    __metadata("design:type", quan_1.Quan)
+], House.prototype, "quan", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => city_1.City, (city) => city.house),
+    __metadata("design:type", city_1.City)
+], House.prototype, "city", void 0);
 House = __decorate([
     (0, typeorm_1.Entity)()
 ], House);

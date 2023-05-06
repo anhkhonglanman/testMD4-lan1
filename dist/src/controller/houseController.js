@@ -33,6 +33,8 @@ class HouseController {
             let house = await houseService_1.default.delete(id);
             res.status(200).json(house);
         };
+        this.findHouse = async (req, res) => {
+        };
     }
 }
 exports.default = new HouseController();
