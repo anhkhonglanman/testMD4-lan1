@@ -1,13 +1,21 @@
 import {Router} from 'express'
 import houseController from "../controller/houseController";
+import {decentralization} from "../middleware/decentralization";
 import {auth} from "../middleware/auth";
-let houseRouter = Router();
+import {checkRoleLandlord} from "../middleware/checkRoleLandlord";
+import {checkOwnerShip} from "../middleware/checkOwnerShip";
 
-// houseRouter.use(auth)
-// houseRouter.use(decentralization)
+const houseRouter = Router()
+
 houseRouter.get('/', houseController.showAllHouse);
+houseRouter.get('/:id', houseController.showHouseById);
+
 houseRouter.get('/search', houseController.searchHouse);
-// houseRouter.post('/', houseController.createHouse);
-// day la ham by
+
+houseRouter.post('/', auth, checkRoleLandlord, houseController.createHouse);
+houseRouter.put('/:id', auth, checkRoleLandlord, checkOwnerShip, houseController.editHouseById);
+houseRouter.delete('/:id',auth, checkRoleLandlord, checkOwnerShip, houseController.delete);
+
+
 
 export default houseRouter

@@ -5,7 +5,7 @@ import addressController from "../controller/addressController";
 
 const router = Router();
 router.use('/users', userRouter);
-router.use('/houses',houseRouter)
-
+router.use('/houses',houseRouter);
 router.get('/city', addressController.getCity);
+
 export default router;

@@ -15,6 +15,7 @@ const image_1 = require("./image");
 const contract_1 = require("./contract");
 const user_1 = require("./user");
 const phuong_1 = require("./phuong");
+const housestatus_1 = require("./housestatus");
 const quan_1 = require("./quan");
 const city_1 = require("./city");
 let House = class House {
@@ -23,10 +24,6 @@ __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], House.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
-], House.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
@@ -51,6 +48,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => phuong_1.Phuong, (phuong) => phuong.house),
     __metadata("design:type", phuong_1.Phuong)
 ], House.prototype, "phuong", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => housestatus_1.HouseStatus, (houseStatus) => houseStatus.house),
+    __metadata("design:type", housestatus_1.HouseStatus)
+], House.prototype, "houseStatus", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => quan_1.Quan, (quan) => quan.house),
     __metadata("design:type", quan_1.Quan)

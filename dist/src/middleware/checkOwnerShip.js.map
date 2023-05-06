@@ -1,0 +1,1 @@
+{"version":3,"file":"checkOwnerShip.js","sourceRoot":"","sources":["../../../src/middleware/checkOwnerShip.ts"],"names":[],"mappings":";;;AAAO,MAAM,cAAc,GAAG,CAAC,GAAG,EAAE,GAAG,EAAE,IAAI,EAAE,EAAE;IAC7C,OAAO,CAAC,GAAG,CAAC,GAAG,CAAC,MAAM,CAAC,EAAE,CAAC,CAAC;IAE3B,IAAI,EAAE,CAAA;AACV,CAAC,CAAA;AAJY,QAAA,cAAc,kBAI1B"}

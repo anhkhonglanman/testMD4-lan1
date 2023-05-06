@@ -31,7 +31,6 @@ class UserController{
     login = async (req: Request, res: Response) => {
         let userData = req.body;
         let user = await userService.checkUser(userData);
-        console.log(user)
         res.status(200).json(user);
 
 

@@ -8,7 +8,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     host: "127.0.0.1",
     port: 3306,
     username: "root",
-    password: "avbkchdttd1",
+    password: "123456",
     database: "local",
     synchronize: true,
     entities: ["dist/src/entity/*.js"]

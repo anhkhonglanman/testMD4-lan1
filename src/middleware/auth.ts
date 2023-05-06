@@ -15,7 +15,6 @@ export const auth = (req, res, next) => {
                     })
                 } else {
                     req.decode = payload;
-                    console.log(req.decode+"day la decode")
                     return next();
 
                 }

@@ -9,25 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Image = void 0;
+exports.HouseStatus = void 0;
 const typeorm_1 = require("typeorm");
 const house_1 = require("./house");
-let Image = class Image {
+let HouseStatus = class HouseStatus {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Image.prototype, "id", void 0);
+], HouseStatus.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Image.prototype, "imageURL", void 0);
+], HouseStatus.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => house_1.House, (house) => house.image),
-    __metadata("design:type", house_1.House)
-], Image.prototype, "house", void 0);
-Image = __decorate([
+    (0, typeorm_1.OneToMany)(() => house_1.House, (house) => house.houseStatus),
+    __metadata("design:type", Array)
+], HouseStatus.prototype, "house", void 0);
+HouseStatus = __decorate([
     (0, typeorm_1.Entity)()
-], Image);
-exports.Image = Image;
-//# sourceMappingURL=image.js.map
+], HouseStatus);
+exports.HouseStatus = HouseStatus;
+//# sourceMappingURL=housestatus.js.map
