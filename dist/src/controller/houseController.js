@@ -11,6 +11,27 @@ class HouseController {
             res.status(201).json(house);
         };
         this.createHouse = async (req, res) => {
+            let id = req['decode']['id'];
+            let data = req.body;
+            let house = await houseService_1.default.addHouse(data, id);
+            res.status(200).json(house);
+        };
+        this.editHouseById = async (req, res) => {
+            let idHouse = req.params.id;
+            let data = req.body;
+            let house = await houseService_1.default.updateHouse(idHouse, data);
+            console.log(idHouse);
+            res.status(200).json(house);
+        };
+        this.showHouseById = async (req, res) => {
+            let id = req.params.id;
+            let house = await houseService_1.default.findHouseById(id);
+            res.status(200).json(house);
+        };
+        this.delete = async (req, res) => {
+            let id = req.params.id;
+            let house = await houseService_1.default.delete(id);
+            res.status(200).json(house);
         };
     }
 }

@@ -1,8 +1,5 @@
 import {Request, Response} from "express";
 import userService from "../service/userService";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import {SECRET} from "../middleware/auth";
 
 class UserController {
 
@@ -34,7 +31,6 @@ class UserController {
     login = async (req: Request, res: Response) => {
         let userData = req.body;
         let user = await userService.checkUser(userData);
-        console.log(user)
         res.status(200).json(user);
 
 
