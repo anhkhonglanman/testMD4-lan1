@@ -3,6 +3,8 @@ import {Image} from "./image";
 import {Contract} from "./contract";
 import {User} from "./user";
 import {Phuong} from "./phuong";
+import {Quan} from "./quan";
+import {City} from "./city";
 @Entity()
 export class House{
     @PrimaryGeneratedColumn()
@@ -22,4 +24,8 @@ export class House{
 
     @ManyToOne(()=> Phuong, (phuong)=> phuong.house)
     phuong : Phuong;
+    @ManyToOne(()=> Quan, (quan)=> quan.house)
+    quan : Quan;
+    @ManyToOne(()=> City, (city)=> city.house)
+    city : City;
 }

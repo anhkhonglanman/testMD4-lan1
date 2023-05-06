@@ -6,23 +6,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const userService_1 = __importDefault(require("../service/userService"));
 class UserController {
     constructor() {
-        this.showFormLogin = async (req, res) => {
-            res.render('users/login');
-        };
-        this.showFromRegister = async (req, res) => {
-            res.render('users/register');
-        };
-        this.login = async (req, res) => {
-            let user = await this.userService.checkUser(req.body);
-            if (!user) {
-                res.redirect(301, '/users/login');
+        this.signup = async (req, res) => {
+            let check = await userService_1.default.checkUsersignup(req.body);
+            if (!check) {
+                let newUser = await userService_1.default.createUser(req.body);
+                res.status(201).json(newUser);
             }
             else {
-                req.session['user'] = user;
-                res.redirect(301, '/products');
+                res.status(201).json('tai khoan da ton tai');
             }
         };
-        this.userService = userService_1.default;
+        this.showUser = async (req, res) => {
+            let userId = req.params.id;
+            let user = await userService_1.default.findUserById(userId);
+            res.status(201).json(user);
+            return user;
+        };
+        this.editUser = async (req, res) => {
+            let user = req.body;
+            let id = req.params.id;
+            let newUser = await userService_1.default.updateUser(id, user);
+            res.status(201).json(newUser);
+        };
+        this.login = async (req, res) => {
+            let userData = req.body;
+            let user = await userService_1.default.checkUser(userData);
+            console.log(user);
+            res.status(200).json(user);
+        };
     }
 }
 exports.default = new UserController();

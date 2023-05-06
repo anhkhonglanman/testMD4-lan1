@@ -8,24 +8,51 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var User_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
-let User = class User {
+const role_1 = require("./role");
+const contract_1 = require("./contract");
+let User = User_1 = class User {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], User.prototype, "id", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: "varchar", length: 255 }),
+    __metadata("design:type", String)
+], User.prototype, "name", void 0);
+__decorate([
     (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], User.prototype, "phoneNumber", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", length: 255 }),
+    __metadata("design:type", String)
+], User.prototype, "address", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: "varchar", length: 255 }),
     __metadata("design:type", String)
 ], User.prototype, "username", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "varchar", length: 255 }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
-User = __decorate([
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => role_1.Role, (role) => role.users),
+    __metadata("design:type", Number)
+], User.prototype, "role", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => contract_1.Contract, (contract) => contract.user),
+    __metadata("design:type", Array)
+], User.prototype, "contract", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => User_1, (user) => user.house),
+    __metadata("design:type", Array)
+], User.prototype, "house", void 0);
+User = User_1 = __decorate([
     (0, typeorm_1.Entity)()
 ], User);
 exports.User = User;
