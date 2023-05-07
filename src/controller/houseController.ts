@@ -52,7 +52,7 @@ class HouseController {
         res.status(200).json(house)
     }
     delete=async (req: Request, res: Response)=>{
-        let id=req.params.id
+        let id=  parseInt(req.params.id)
         let house= await houseService.delete(id);
         res.status(200).json(house)
     }
