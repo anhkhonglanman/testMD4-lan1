@@ -41,6 +41,7 @@ class HouseController {
         let idHouse=req.params.id
         let data=req.body;
         let imageData = data.image;
+        console.log(data)
         await imageService.upDateImage(imageData,idHouse)
         await  houseService.updateHouse(idHouse,data);
         res.status(200).json("ok")

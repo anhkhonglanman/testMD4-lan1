@@ -7,22 +7,24 @@ class ImageService{
     }
 
     addImage = async (id, data) => {
+        console.log(data)
        await data.forEach(item=>{
            this.imageRepository.save({house : id ,imageURL:`${item}`})
         })
     }
     upDateImage = async (data,id) => {
-        await Promise.all(data.map(async (item) => {
-            const qb = this.imageRepository.createQueryBuilder('image');
-            await qb.update()
-                .set({ imageURL: item })
-                .where('house = :id', { id: id })
-                .execute();
-        }));
+       await this.deleteImage(id);
+       await this.addImage(id,data)
+
     }
 
-    findImageByIdHouse = async (id) => {
-      return  await this.imageRepository.query(`select imageURL from image where houseId = ${id}`)
+    deleteImage = async (idHouse) => {
+        await this.imageRepository
+            .createQueryBuilder('users')
+            .delete()
+            .from(Image)
+            .where({ house: idHouse })
+            .execute()
     }
 
 }
