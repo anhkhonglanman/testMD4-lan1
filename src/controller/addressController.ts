@@ -8,29 +8,15 @@ class AddressController {
         let city = await addressService.getCity();
         res.status(201).json(city);
     }
-    showUser = async (req: Request, res: Response) => {
-        let userId = req.params.id;
-        let user = await userService.findUserById(userId)
-        res.status(201).json(user);
-        return user
+    getQuan = async (req: Request, res: Response) => {
+        let city = await addressService.getQuan();
+        res.status(201).json(city);
+    }
+    getPhuong = async (req: Request, res: Response) => {
+        let city = await addressService.getPhuong();
+        res.status(201).json(city);
     }
 
-    editUser = async (req: Request, res: Response) => {
-        let user = req.body;
-        let id = req.params.id
-        let newUser = await userService.updateUser(id, user);
-        res.status(201).json(newUser);
-    }
-
-
-    login = async (req: Request, res: Response) => {
-        let userData = req.body;
-        let user = await userService.checkUser(userData);
-        console.log(user)
-        res.status(200).json(user);
-
-
-    }
 
 }
 

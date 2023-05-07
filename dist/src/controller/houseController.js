@@ -15,6 +15,15 @@ class HouseController {
             if (!req.query.priceLow) {
                 req.query.priceLow = "0";
             }
+            if (!req.query.priceHigh) {
+                req.query.priceLow = "1000000";
+            }
+            if (!req.query.areaLow) {
+                req.query.areaLow = "50";
+            }
+            if (!req.query.areaHigh) {
+                req.query.areaHigh = "1000";
+            }
             let house = await houseService_1.default.findHouse(req.query);
             console.log(house);
             res.status(201).json(house);

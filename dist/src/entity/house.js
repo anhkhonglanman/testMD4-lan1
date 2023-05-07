@@ -29,6 +29,10 @@ __decorate([
     __metadata("design:type", Number)
 ], House.prototype, "price", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], House.prototype, "area", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: "varchar", length: 300 }),
     __metadata("design:type", String)
 ], House.prototype, "description", void 0);

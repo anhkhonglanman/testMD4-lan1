@@ -4,6 +4,8 @@ declare class AddressService {
     private phuongRepository;
     constructor();
     getCity: () => Promise<any>;
+    getQuan: () => Promise<any>;
+    getPhuong: () => Promise<any>;
 }
 declare const _default: AddressService;
 export default _default;

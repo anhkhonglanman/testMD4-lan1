@@ -8,6 +8,7 @@ import { City } from "./city";
 export declare class House {
     id: number;
     price: number;
+    area: number;
     description: string;
     image: Image[];
     contract: Contract[];

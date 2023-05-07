@@ -22,5 +22,12 @@ class AddressService {
     getCity = async () => {
         return await this.cityRepository.find()
     }
+    getQuan = async () => {
+        return await this.cityRepository.find()
+    }
+    getPhuong = async () => {
+        return await this.cityRepository.find()
+    }
+
 }
 export default new AddressService();

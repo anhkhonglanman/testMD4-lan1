@@ -12,9 +12,10 @@ export class House {
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
-    price: number
+    price: number;
+
     @Column()
-    area: number
+    area: number;
     @Column({type: "varchar", length: 300})
     description: string;
     @OneToMany(() => Image, (image) => image.house)

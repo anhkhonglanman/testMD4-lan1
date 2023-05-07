@@ -3,7 +3,7 @@ import {House} from "../entity/house";
 import bcrypt from "bcrypt";
 import {User} from "../entity/user";
 import jwt from "jsonwebtoken";
-import {Request, Response} from "express";
+import {request, Request, Response} from "express";
 
 class HouseService {
     private houseRepository;
@@ -25,26 +25,44 @@ class HouseService {
     }
 
     findHouse = async (query) => {
+        // if (query.phuongId) {
+        //     return await this.houseRepository.createQueryBuilder("house")
+        //         .where("house.price >= :priceLow", {priceLow: query.priceLow})
+        //         .andWhere(`house.phuongId = :phuongId`, {phuongId: query.phuongId})
+        //         .getMany()
+        // } else if (query.quanId) {
+        //     return await this.houseRepository.createQueryBuilder("house")
+        //         .where("house.price >= :priceLow", {priceLow: query.priceLow})
+        //         .andWhere(`house.quanId = :quanId`, {quanId: query.quanId})
+        //         .getMany()
+        // } else if (query.cityId) {
+        //     return await this.houseRepository.createQueryBuilder("house")
+        //         .where("house.price >= :priceLow", {priceLow: query.priceLow})
+        //         .andWhere(`house.cityId = :cityId`, {cityId: query.cityId})
+        //         .getMany()
+        // } else {
+        //     return await this.houseRepository.createQueryBuilder("house")
+        //         .where("house.price >= :priceLow", {priceLow: query.priceLow})
+        //         .getMany()
+        // }
+
+        const qb = this.houseRepository.createQueryBuilder('house')
+            .where('house.price >= :priceLow', {priceLow: query.priceLow})
+            .orWhere('house.price <= :priceHigh', {priceHigh: query.priceHigh})
+        // .orWhere('house.area BETWEEN :min AND :max', {min : 50, max : 1000})
+            .orWhere('house.area >= :areaLow', {areaLow: query.areaHigh})
+            .orWhere('house.area <= :areaHigh', {areaHigh: query.areaLow})
         if (query.phuongId) {
-            return await this.houseRepository.createQueryBuilder("house")
-                .where("house.price >= :priceLow", {priceLow: query.priceLow})
-                .andWhere(`house.phuongId = :phuongId`, {phuongId: query.phuongId})
-                .getMany()
+            qb.andWhere(`house.phuongId = :phuongId`, {phuongId: query.phuongId});
+            await qb.getMany();
         } else if (query.quanId) {
-            return await this.houseRepository.createQueryBuilder("house")
-                .where("house.price >= :priceLow", {priceLow: query.priceLow})
-                .andWhere(`house.quanId = :quanId`, {quanId: query.quanId})
-                .getMany()
+            qb.andWhere(`house.quanId = :quanId`, {quanId: query.quanId});
+            await qb.getMany();
         } else if (query.cityId) {
-            return await this.houseRepository.createQueryBuilder("house")
-                .where("house.price >= :priceLow", {priceLow: query.priceLow})
-                .andWhere(`house.cityId = :cityId`, {cityId: query.cityId})
-                .getMany()
-        } else {
-            return await this.houseRepository.createQueryBuilder("house")
-                .where("house.price >= :priceLow", {priceLow: query.priceLow})
-                .getMany()
+            qb.andWhere(`house.cityId = :cityId`, {cityId: query.cityId});
+            await qb.getMany();
         }
+        return await qb.getMany();
 
 
         // return await this.houseRepository.createQueryBuilder("house")
@@ -53,18 +71,7 @@ class HouseService {
         //         {phuongId: (query.phuongId) ? query.phuongId : 0})
         //
         //     .getMany()
-
     }
-    // createHouse = async (house) => {
-    //     console.log(house)
-    //     let newHouse = new House();
-    //     newHouse.price = house.price;
-    //     newHouse.description = house.description;
-    //     newHouse.user = house.userid;
-    //     newHouse.phuong = house.phuong
-    //     newHouse.houseStatus = house.status;
-    //     await this.houseRepository.save(newHouse);
-    // }
 
     addHouse = async (house,id) => {
         console.log(house)
