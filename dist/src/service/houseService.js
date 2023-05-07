@@ -9,7 +9,8 @@ class HouseService {
                 relations: {
                     phuong: true,
                     quan: true,
-                    city: true
+                    city: true,
+                    image: true
                 }
             });
             return houses;
@@ -35,21 +36,36 @@ class HouseService {
             return await qb.getMany();
         };
         this.addHouse = async (house, id) => {
-            console.log(house);
             let newHouse = new house_1.House();
             newHouse.price = house.price;
+            newHouse.area = house.area;
             newHouse.description = house.description;
             newHouse.user = id;
-            newHouse.phuong = house.phuongid;
-            newHouse.houseStatus = house.status;
+            newHouse.phuong = house.phuong;
+            newHouse.quan = house.quanId;
+            newHouse.city = house.city;
             await this.houseRepository.save(newHouse);
+            return newHouse;
         };
         this.updateHouse = async (id, house) => {
-            await this.houseRepository.update({ id: id }, house);
+            await this.houseRepository
+                .createQueryBuilder()
+                .update({
+                price: house.price,
+                area: house.area,
+                description: house.description,
+                phuong: house.phuong,
+                quan: house.quanId,
+                city: house.cityId,
+            })
+                .execute();
         };
         this.findHouseById = async (id) => {
-            let houses = await this.houseRepository.find({ id: id });
-            return houses[0];
+            let house = await this.houseRepository.query(`select *
+                                                 from house
+                                                          join image i on house.id = i.houseId
+                                                 where houseId = ${id}`);
+            return house[0];
         };
         this.delete = async (id) => {
             if (id) {
@@ -58,6 +74,11 @@ class HouseService {
             else {
                 return 'khong ton tai';
             }
+        };
+        this.findHouseByIdOwner = async (id) => {
+            return await this.houseRepository.query(`select *
+                                                 from house
+                                                 where userId = ${id}`);
         };
         this.houseRepository = data_source_1.AppDataSource.getRepository(house_1.House);
     }

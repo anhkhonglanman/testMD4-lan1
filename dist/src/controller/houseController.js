@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const houseService_1 = __importDefault(require("../service/houseService"));
+const imageService_1 = __importDefault(require("../service/imageService"));
 class HouseController {
     constructor() {
         this.showAllHouse = async (req, res) => {
@@ -34,15 +35,19 @@ class HouseController {
         this.createHouse = async (req, res) => {
             let id = req['decode']['id'];
             let data = req.body;
+            let imageData = data.image;
             let house = await houseService_1.default.addHouse(data, id);
+            let idHouse = house.id;
+            await imageService_1.default.addImage(idHouse, imageData);
             res.status(200).json(house);
         };
         this.editHouseById = async (req, res) => {
             let idHouse = req.params.id;
             let data = req.body;
-            let house = await houseService_1.default.updateHouse(idHouse, data);
-            console.log(idHouse);
-            res.status(200).json(house);
+            let imageData = data.image;
+            await imageService_1.default.upDateImage(imageData, idHouse);
+            await houseService_1.default.updateHouse(idHouse, data);
+            res.status(200).json("ok");
         };
         this.showHouseById = async (req, res) => {
             let id = req.params.id;
@@ -50,11 +55,9 @@ class HouseController {
             res.status(200).json(house);
         };
         this.delete = async (req, res) => {
-            let id = req.params.id;
+            let id = parseInt(req.params.id);
             let house = await houseService_1.default.delete(id);
             res.status(200).json(house);
-        };
-        this.findHouse = async (req, res) => {
         };
     }
 }

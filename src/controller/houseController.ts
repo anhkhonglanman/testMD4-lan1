@@ -1,6 +1,6 @@
-import {Request, Response} from "express";
+import { Request, Response} from "express";
 import houseService from "../service/houseService";
-
+import imageService from "../service/imageService";
 
 
 class HouseController {
@@ -37,16 +37,20 @@ class HouseController {
     createHouse = async (req: Request, res: Response) => {
        let id=req['decode']['id'];
        let data=req.body;
-       let house=await  houseService.addHouse(data,id);
+       let imageData=data.image;
+       let house = await  houseService.addHouse(data,id);
+       let idHouse=house.id
+        await imageService.addImage(idHouse,imageData)
        res.status(200).json(house)
 
     }
-    editHouseById = async (req: Request, res: Response) => {
+    editHouseById= async (req: Request, res: Response) => {
         let idHouse=req.params.id
         let data=req.body;
-        let house=await  houseService.updateHouse(idHouse,data);
-        console.log(idHouse)
-        res.status(200).json(house)
+        let imageData = data.image;
+        await imageService.upDateImage(imageData,idHouse)
+        await  houseService.updateHouse(idHouse,data);
+        res.status(200).json("ok")
 
     }
     showHouseById = async (req: Request, res: Response)=>{
@@ -55,12 +59,9 @@ class HouseController {
         res.status(200).json(house)
     }
     delete = async (req: Request, res: Response)=>{
-        let id=req.params.id
+        let id= parseInt(req.params.id)
         let house= await houseService.delete(id);
         res.status(200).json(house)
-    }
-    findHouse = async (req: Request, res: Response)=>{
-
     }
 
 

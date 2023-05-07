@@ -45,7 +45,6 @@ class UserService {
                         username: user.username,
                         role: 2
                     }
-
                 }
                 return jwt.sign(payload, SECRET, {
                     expiresIn: 36000 * 10 * 100

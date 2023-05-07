@@ -4,18 +4,19 @@ import contractService from "../service/contractService";
 
 class ContractController {
     getContract = async (req: Request, res: Response) => {
-        console.log(req['decode'])
-        let id=req['decode']['id'];
-        console.log(id)
+        let id=req['decode'].id
         let contract = await contractService.getContractByUserID(id);
+        console.log(contract)
         res.status(201).json(contract);
     }
-
-    getContractByHouseId = async (req: Request, res: Response) => {
-        let id = parseInt(req.params.id)
-        let contract = await contractService.getContractByHouseId(id)
-        console.log(contract)
-        res.status(201).json(contract)
+    editContractByClient= async (req: Request, res: Response) => {
+        let idContract = req.params.id;
+        let contract = await contractService.updateContractByClient(parseInt(idContract),req.body)
+        res.status(201).json(contract);
+    }
+    getAll=async (req: Request, res: Response)=>{
+        let contract = await contractService.showAll();
+        res.status(201).json(contract);
     }
 }
 

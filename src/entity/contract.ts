@@ -1,7 +1,8 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 
 import {House} from "./house";
 import {User} from "./user";
+import {ContractStatus} from "./contractStatus";
 
 @Entity()
 export class Contract{
@@ -19,4 +20,6 @@ export class Contract{
     house : House;
     @ManyToOne(()=> User, (user)=> user.contract)
     user : User;
+    @OneToMany(()=> ContractStatus, (contractStatus)=> contractStatus.contract)
+    contractStatus:ContractStatus[];
 }

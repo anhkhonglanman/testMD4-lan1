@@ -13,6 +13,7 @@ exports.Contract = void 0;
 const typeorm_1 = require("typeorm");
 const house_1 = require("./house");
 const user_1 = require("./user");
+const contractStatus_1 = require("./contractStatus");
 let Contract = class Contract {
 };
 __decorate([
@@ -43,6 +44,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => user_1.User, (user) => user.contract),
     __metadata("design:type", user_1.User)
 ], Contract.prototype, "user", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => contractStatus_1.ContractStatus, (contractStatus) => contractStatus.contract),
+    __metadata("design:type", Array)
+], Contract.prototype, "contractStatus", void 0);
 Contract = __decorate([
     (0, typeorm_1.Entity)()
 ], Contract);
