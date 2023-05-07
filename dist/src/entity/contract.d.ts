@@ -1,5 +1,6 @@
 import { House } from "./house";
 import { User } from "./user";
+import { ContractStatus } from "./contractStatus";
 export declare class Contract {
     id: number;
     price: number;
@@ -8,4 +9,5 @@ export declare class Contract {
     cost: number;
     house: House;
     user: User;
+    contractStatus: ContractStatus[];
 }

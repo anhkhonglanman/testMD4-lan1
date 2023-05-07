@@ -6,16 +6,16 @@ import {checkRoleLandlord} from "../middleware/checkRoleLandlord";
 import {checkOwnerShip} from "../middleware/checkOwnerShip";
 
 const houseRouter = Router()
+houseRouter.get('/search', houseController.searchHouse)
 
 houseRouter.get('/', houseController.showAllHouse);
 houseRouter.get('/:id', houseController.showHouseById);
 
-houseRouter.get('/search', houseController.searchHouse);
-
 houseRouter.post('/', auth, checkRoleLandlord, houseController.createHouse);
-houseRouter.put('/:id', auth, checkRoleLandlord, checkOwnerShip, houseController.editHouseById);
-houseRouter.delete('/:id',auth, checkRoleLandlord, checkOwnerShip, houseController.delete);
-
+houseRouter.put('/:id',
+    // auth, checkRoleLandlord, checkOwnerShip,
+    houseController.editHouseById);
+houseRouter.delete('/:id', auth, checkRoleLandlord, checkOwnerShip, houseController.delete);
 
 
 export default houseRouter

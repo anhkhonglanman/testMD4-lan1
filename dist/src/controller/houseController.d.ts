@@ -6,7 +6,6 @@ declare class HouseController {
     editHouseById: (req: Request, res: Response) => Promise<void>;
     showHouseById: (req: Request, res: Response) => Promise<void>;
     delete: (req: Request, res: Response) => Promise<void>;
-    findHouse: (req: Request, res: Response) => Promise<void>;
 }
 declare const _default: HouseController;
 export default _default;

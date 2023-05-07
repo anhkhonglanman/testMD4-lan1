@@ -37,15 +37,14 @@ class UserService {
                     payload = {
                         id: usserFinds.id,
                         username: user.username,
-                        role: "client"
+                        role: 1
                     }
                 } else {
                     payload = {
                         id: usserFinds.id,
                         username: user.username,
-                        role: "owner"
+                        role: 2
                     }
-
                 }
                 return jwt.sign(payload, SECRET, {
                     expiresIn: 36000 * 10 * 100

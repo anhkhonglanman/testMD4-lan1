@@ -35,14 +35,14 @@ class UserService {
                         payload = {
                             id: usserFinds.id,
                             username: user.username,
-                            role: "client"
+                            role: 1
                         };
                     }
                     else {
                         payload = {
                             id: usserFinds.id,
                             username: user.username,
-                            role: "owner"
+                            role: 2
                         };
                     }
                     return jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {

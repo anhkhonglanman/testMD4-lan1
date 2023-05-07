@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import {User} from "../entity/user";
 import jwt from "jsonwebtoken";
 import {Request, Response} from "express";
+import {Image} from "../entity/image";
 
 class HouseService {
     private houseRepository;
@@ -18,7 +19,8 @@ class HouseService {
             relations: {
                 phuong: true,
                 quan: true,
-                city: true
+                city: true,
+                image: true
             }
         })
         return houses
@@ -66,31 +68,51 @@ class HouseService {
     //     await this.houseRepository.save(newHouse);
     // }
 
-    addHouse = async (house,id) => {
-        console.log(house)
+    addHouse = async (house, id) => {
         let newHouse = new House();
         newHouse.price = house.price;
+        newHouse.area = house.area;
         newHouse.description = house.description;
-        newHouse.user=id;
-        newHouse.phuong = house.phuongid
-        newHouse.houseStatus = house.status;
+        newHouse.user = id;
+        newHouse.phuong = house.phuong
+        newHouse.quan = house.quanId;
+        newHouse.city = house.city;
         await this.houseRepository.save(newHouse);
+        return newHouse
     }
     updateHouse = async (id, house) => {
-        await this.houseRepository.update({id: id}, house);
+        await this.houseRepository
+            .createQueryBuilder()
+            .update({
+                price: house.price,
+                area: house.area,
+                description: house.description,
+                phuong: house.phuong,
+                quan: house.quanId,
+                city: house.cityId,
+            })
+            .execute();
     }
     findHouseById = async (id) => {
-
-        let houses = await this.houseRepository.find({id:id})
-        return houses[0]
+        return await this.houseRepository.query(`select *
+                                                 from house
+                                                          join image i on house.id = i.houseId
+                                                 where houseId = ${id}`)
     }
-    delete= async (id) => {
-        if (id){
-            await this.houseRepository.delete({id:id})
-        }else {
-            return'khong ton tai'
+    delete = async (id) => {
+        if (id) {
+            await this.houseRepository.delete({id: id})
+        } else {
+            return 'khong ton tai'
         }
 
+
+    }
+    findHouseByIdOwner = async (id) => {
+
+        return await this.houseRepository.query(`select *
+                                                 from house
+                                                 where userId = ${id}`)
     }
 
 
