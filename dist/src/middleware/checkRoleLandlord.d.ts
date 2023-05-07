@@ -1,1 +1,1 @@
-export declare const checkRoleLandlord: (req: any, res: any, next: any) => void;
+export declare const checkRoleLandlord: (req: any, res: any, next: any) => any;

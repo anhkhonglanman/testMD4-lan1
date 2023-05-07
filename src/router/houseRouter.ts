@@ -11,10 +11,9 @@ houseRouter.get('/', houseController.showAllHouse);
 houseRouter.get('/search', houseController.searchHouse);
 houseRouter.get('/:id', houseController.showHouseById);
 
-
-// houseRouter.post('/', auth, checkRoleLandlord, houseController.createHouse);
-// houseRouter.put('/:id', auth, checkRoleLandlord, checkOwnerShip, houseController.editHouseById);
-// houseRouter.delete('/:id',auth, checkRoleLandlord, checkOwnerShip, houseController.delete);
+houseRouter.post('/', auth, checkRoleLandlord, houseController.createHouse);
+houseRouter.put('/:id', auth, checkRoleLandlord, checkOwnerShip, houseController.editHouseById);
+houseRouter.delete('/:id',auth, checkRoleLandlord, checkOwnerShip, houseController.delete);
 
 
 

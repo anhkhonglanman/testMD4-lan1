@@ -24,6 +24,9 @@ class HouseController {
             if (!req.query.areaHigh) {
                 req.query.areaHigh = "1000";
             }
+            if (!req.query.cityId) {
+                req.query.cityId = "0";
+            }
             let house = await houseService_1.default.findHouse(req.query);
             console.log(house);
             res.status(201).json(house);
