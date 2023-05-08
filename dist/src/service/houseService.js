@@ -15,34 +15,30 @@ class HouseService {
             });
             return houses;
         };
-        this.findHouseById = async (id) => {
-            return await data_source_1.AppDataSource.createQueryBuilder()
-                .select("house")
-                .from(house_1.House, "house")
-                .leftJoinAndSelect("house.image", "image")
-                .innerJoinAndSelect("house.user", "user")
-                .where("house.id = :id", { id: id })
-                .getOne();
-        };
         this.findHouse = async (query) => {
-            const qb = this.houseRepository.createQueryBuilder('house')
-                .where('house.price >= :priceLow', { priceLow: query.priceLow })
-                .orWhere('house.price <= :priceHigh', { priceHigh: query.priceHigh })
-                .orWhere('house.area >= :areaLow', { areaLow: query.areaHigh })
-                .orWhere('house.area <= :areaHigh', { areaHigh: query.areaLow });
             if (query.phuongId) {
-                qb.andWhere(`house.phuongId = :phuongId`, { phuongId: query.phuongId });
-                await qb.getMany();
+                return await this.houseRepository.createQueryBuilder("house")
+                    .where("house.price >= :priceLow", { priceLow: query.priceLow })
+                    .andWhere(`house.phuongId = :phuongId`, { phuongId: query.phuongId })
+                    .getMany();
             }
             else if (query.quanId) {
-                qb.andWhere(`house.quanId = :quanId`, { quanId: query.quanId });
-                await qb.getMany();
+                return await this.houseRepository.createQueryBuilder("house")
+                    .where("house.price >= :priceLow", { priceLow: query.priceLow })
+                    .andWhere(`house.quanId = :quanId`, { quanId: query.quanId })
+                    .getMany();
             }
             else if (query.cityId) {
-                qb.andWhere(`house.cityId = :cityId`, { cityId: query.cityId });
-                await qb.getMany();
+                return await this.houseRepository.createQueryBuilder("house")
+                    .where("house.price >= :priceLow", { priceLow: query.priceLow })
+                    .andWhere(`house.cityId = :cityId`, { cityId: query.cityId })
+                    .getMany();
             }
-            return await qb.getMany();
+            else {
+                return await this.houseRepository.createQueryBuilder("house")
+                    .where("house.price >= :priceLow", { priceLow: query.priceLow })
+                    .getMany();
+            }
         };
         this.addHouse = async (house, id) => {
             let newHouse = new house_1.House();
@@ -68,6 +64,14 @@ class HouseService {
                 city: house.cityId,
             })
                 .execute();
+        };
+        this.findHouseById = async (id) => {
+            return await data_source_1.AppDataSource.createQueryBuilder()
+                .select("house")
+                .from(house_1.House, "house")
+                .leftJoinAndSelect("house.image", "image")
+                .where("house.id = :id", { id: id })
+                .getOne();
         };
         this.delete = async (id) => {
             if (id) {

@@ -61,7 +61,7 @@ class HouseService {
         const qb = this.houseRepository.createQueryBuilder('house')
             .where('house.price >= :priceLow', {priceLow: query.priceLow})
             .orWhere('house.price <= :priceHigh', {priceHigh: query.priceHigh})
-        // .orWhere('house.area BETWEEN :min AND :max', {min : 50, max : 1000})
+            // .orWhere('house.area BETWEEN :min AND :max', {min : 50, max : 1000})
             .orWhere('house.area >= :areaLow', {areaLow: query.areaHigh})
             .orWhere('house.area <= :areaHigh', {areaHigh: query.areaLow})
         if (query.phuongId) {
@@ -75,7 +75,6 @@ class HouseService {
             await qb.getMany();
         }
         return await qb.getMany();
-
         // return await this.houseRepository.createQueryBuilder("house")
         //     .where("house.price >= :priceLow", {priceLow: query.priceLow})
         //     .andWhere(`house.phuongId ${(query.phuongId) ? "=" : ">"} :phuongId`,
@@ -111,6 +110,20 @@ class HouseService {
             .execute();
     }
 
+    findHouseById = async (id) => {
+       // let house= await this.houseRepository.query(`select *
+       //                                           from house
+       //                                              join image i on house.id = i.houseId
+       //                                           where houseId = ${id}`);
+       // return house[0]
+        return  await AppDataSource.createQueryBuilder()
+            .select("house")
+            .from(House, "house")
+            .leftJoinAndSelect("house.image", "image")
+            .where("house.id = :id", {id: id})
+            .getOne()
+
+    }
     delete = async (id) => {
         if (id) {
             await this.houseRepository.delete({id: id})

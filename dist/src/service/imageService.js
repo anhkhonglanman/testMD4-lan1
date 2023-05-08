@@ -5,21 +5,22 @@ const image_1 = require("../entity/image");
 class ImageService {
     constructor() {
         this.addImage = async (id, data) => {
+            console.log(data);
             await data.forEach(item => {
                 this.imageRepository.save({ house: id, imageURL: `${item}` });
             });
         };
-        this.upDateImage = async (imageData, id) => {
-            await Promise.all(imageData.map(async (item) => {
-                const qb = this.imageRepository.createQueryBuilder('image');
-                await qb.update()
-                    .set({ imageURL: item })
-                    .where('house = :id', { id: id })
-                    .execute();
-            }));
+        this.upDateImage = async (data, id) => {
+            await this.deleteImage(id);
+            await this.addImage(id, data);
         };
-        this.findImageByIdHouse = async (id) => {
-            return await this.imageRepository.query(`select imageURL from image where houseId = ${id}`);
+        this.deleteImage = async (idHouse) => {
+            await this.imageRepository
+                .createQueryBuilder('users')
+                .delete()
+                .from(image_1.Image)
+                .where({ house: idHouse })
+                .execute();
         };
         this.imageRepository = data_source_1.AppDataSource.getRepository(image_1.Image);
     }
