@@ -62,13 +62,14 @@ class HouseService {
                 phuong: house.phuong,
                 quan: house.quanId,
                 city: house.cityId,
-            })
+            }).where({ id: id })
                 .execute();
         };
         this.findHouseById = async (id) => {
             return await data_source_1.AppDataSource.createQueryBuilder()
                 .select("house")
                 .from(house_1.House, "house")
+                .innerJoinAndSelect("house.user", "user")
                 .leftJoinAndSelect("house.image", "image")
                 .where("house.id = :id", { id: id })
                 .getOne();

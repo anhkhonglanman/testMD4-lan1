@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 declare class AddressController {
     getCity: (req: Request, res: Response) => Promise<void>;
-    showUser: (req: Request, res: Response) => Promise<any>;
+    showUser: (req: Request, res: Response) => Promise<void>;
     editUser: (req: Request, res: Response) => Promise<void>;
     login: (req: Request, res: Response) => Promise<void>;
 }

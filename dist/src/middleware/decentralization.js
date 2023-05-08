@@ -6,8 +6,9 @@ const decentralization = (req, res, next) => {
         next();
     }
     else {
-        res.status(401).json({
-            message: 'You must be an administrator'
+        res.status(200).json({
+            message: 'khong co quyen',
+            success: false
         });
     }
 };

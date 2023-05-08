@@ -9,7 +9,6 @@ class ContractController {
         this.getContract = async (req, res) => {
             let id = req['decode'].id;
             let contract = await contractService_1.default.getContractByUserID(id);
-            console.log(contract);
             res.status(201).json(contract);
         };
         this.editContractByClient = async (req, res) => {

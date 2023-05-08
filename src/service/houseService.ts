@@ -1,10 +1,5 @@
 import {AppDataSource} from "../data-source";
 import {House} from "../entity/house";
-import bcrypt from "bcrypt";
-import {User} from "../entity/user";
-import jwt from "jsonwebtoken";
-import {Request, Response} from "express";
-import {Image} from "../entity/image";
 
 class HouseService {
     private houseRepository;
@@ -90,18 +85,14 @@ class HouseService {
                 phuong: house.phuong,
                 quan: house.quanId,
                 city: house.cityId,
-            })
+            }).where({id:id})
             .execute();
     }
     findHouseById = async (id) => {
-       // let house= await this.houseRepository.query(`select *
-       //                                           from house
-       //                                              join image i on house.id = i.houseId
-       //                                           where houseId = ${id}`);
-       // return house[0]
         return  await AppDataSource.createQueryBuilder()
             .select("house")
             .from(House, "house")
+            .innerJoinAndSelect("house.user","user")
             .leftJoinAndSelect("house.image", "image")
             .where("house.id = :id", {id: id})
             .getOne()

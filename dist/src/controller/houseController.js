@@ -13,12 +13,10 @@ class HouseController {
             res.status(201).json(house);
         };
         this.searchHouse = async (req, res) => {
-            console.log(123);
             if (!req.query.priceLow) {
                 req.query.priceLow = "0";
             }
             let house = await houseService_1.default.findHouse(req.query);
-            console.log(house);
             res.status(201).json(house);
         };
         this.createHouse = async (req, res) => {
@@ -28,27 +26,35 @@ class HouseController {
             let house = await houseService_1.default.addHouse(data, id);
             let idHouse = house.id;
             await imageService_1.default.addImage(idHouse, imageData);
-            res.status(200).json(house);
+            res.status(200).json({
+                success: true,
+                data: house.id
+            });
         };
         this.editHouseById = async (req, res) => {
             let idHouse = req.params.id;
             let data = req.body;
             let imageData = data.image;
-            console.log(data);
             await imageService_2.default.upDateImage(imageData, idHouse);
             await houseService_1.default.updateHouse(idHouse, data);
-            res.status(200).json("ok");
+            res.status(200).json({
+                success: true
+            });
         };
         this.showHouseById = async (req, res) => {
             let id = req.params.id;
             let house = await houseService_1.default.findHouseById(id);
-            console.log(house);
-            res.status(200).json(house);
+            res.status(200).json({
+                success: true,
+                data: house
+            });
         };
         this.delete = async (req, res) => {
             let id = parseInt(req.params.id);
-            let house = await houseService_1.default.delete(id);
-            res.status(200).json(house);
+            await houseService_1.default.delete(id);
+            res.status(200).json({
+                success: true,
+            });
         };
     }
 }

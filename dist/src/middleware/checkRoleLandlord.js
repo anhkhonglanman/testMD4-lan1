@@ -7,7 +7,8 @@ const checkRoleLandlord = (req, res, next) => {
     }
     else {
         res.status(401).json({
-            message: 'You must be an administrator'
+            message: "ban khong co quyen ben check role",
+            success: false
         });
     }
 };

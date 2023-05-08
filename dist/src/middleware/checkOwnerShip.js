@@ -14,7 +14,8 @@ const checkOwnerShip = async (req, res, next) => {
     }
     else {
         res.status(401).json({
-            message: "khong co quyen+++++"
+            message: "ban khong co quyen ben checkowen",
+            success: false
         });
     }
 };

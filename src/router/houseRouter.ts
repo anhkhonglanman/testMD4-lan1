@@ -12,9 +12,7 @@ houseRouter.get('/', houseController.showAllHouse);
 houseRouter.get('/:id', houseController.showHouseById);
 
 houseRouter.post('/', auth, checkRoleLandlord, houseController.createHouse);
-houseRouter.put('/:id',
-    // auth, checkRoleLandlord, checkOwnerShip,
-    houseController.editHouseById);
+houseRouter.put('/:id', auth, checkRoleLandlord, checkOwnerShip,houseController.editHouseById);
 houseRouter.delete('/:id', auth, checkRoleLandlord, checkOwnerShip, houseController.delete);
 
 

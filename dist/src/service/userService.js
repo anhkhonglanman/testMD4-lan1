@@ -27,34 +27,23 @@ class UserService {
                                                         from user
                                                         where username = "${user.username}"`);
             let usserFinds = userFind[0];
+            console.log(usserFinds);
             if (usserFinds) {
                 let pass = await bcrypt_1.default.compare(user.password, usserFinds.password);
                 if (pass) {
-                    let payload;
-                    if (usserFinds.role === 1) {
-                        payload = {
-                            id: usserFinds.id,
-                            username: user.username,
-                            role: 1
-                        };
-                    }
-                    else {
-                        payload = {
-                            id: usserFinds.id,
-                            username: user.username,
-                            role: 2
-                        };
-                    }
+                    let payload = {
+                        id: usserFinds.id,
+                        username: user.username,
+                        role: usserFinds.roleId
+                    };
+                    console.log(payload);
                     return jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {
                         expiresIn: 36000 * 10 * 100
                     });
                 }
-                else {
-                    return 'khong dung pass';
-                }
             }
             else {
-                return 'khong dung tai khoan hoac mat khau';
+                return 'khong dung pass';
             }
         };
         this.findUserById = async (userId) => {
