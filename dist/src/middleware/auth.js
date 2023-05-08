@@ -25,13 +25,13 @@ const auth = (req, res, next) => {
             });
         }
         else {
-            req.status(401).json({
+            res.status(401).json({
                 message: "khong co quyen"
             });
         }
     }
     else {
-        req.status(401).json({
+        res.status(401).json({
             message: "khong co quyen"
         });
     }

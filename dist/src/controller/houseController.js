@@ -42,6 +42,7 @@ class HouseController {
         this.showHouseById = async (req, res) => {
             let id = req.params.id;
             let house = await houseService_1.default.findHouseById(id);
+            console.log(house);
             res.status(200).json(house);
         };
         this.delete = async (req, res) => {

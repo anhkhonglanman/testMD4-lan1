@@ -94,11 +94,18 @@ class HouseService {
             .execute();
     }
     findHouseById = async (id) => {
-       let house= await this.houseRepository.query(`select *
-                                                 from house
-                                                          join image i on house.id = i.houseId
-                                                 where houseId = ${id}`);
-       return house[0]
+       // let house= await this.houseRepository.query(`select *
+       //                                           from house
+       //                                              join image i on house.id = i.houseId
+       //                                           where houseId = ${id}`);
+       // return house[0]
+        return  await AppDataSource.createQueryBuilder()
+            .select("house")
+            .from(House, "house")
+            .leftJoinAndSelect("house.image", "image")
+            .where("house.id = :id", {id: id})
+            .getOne()
+
     }
     delete = async (id) => {
         if (id) {
