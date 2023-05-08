@@ -11,12 +11,16 @@ class AddressController {
             res.status(201).json(city);
         };
         this.getQuan = async (req, res) => {
-            let city = await addressService_1.default.getQuan();
+            let id = req.query.city;
+            console.log(req.query, id);
+            let city = await addressService_1.default.getQuan(id);
             res.status(201).json(city);
         };
         this.getPhuong = async (req, res) => {
-            let city = await addressService_1.default.getPhuong();
-            res.status(201).json(city);
+            let id = req.query.quan;
+            console.log(req.query, id);
+            let quan = await addressService_1.default.getPhuong(id);
+            res.status(201).json(quan);
         };
     }
 }

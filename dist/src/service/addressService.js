@@ -9,11 +9,28 @@ class AddressService {
         this.getCity = async () => {
             return await this.cityRepository.find();
         };
-        this.getQuan = async () => {
-            return await this.quanRepository.find();
+        this.getQuan = async (id) => {
+            return await data_source_1.AppDataSource.createQueryBuilder()
+                .select("quan")
+                .from(quan_1.Quan, "quan")
+                .where("quan.cityId = :id", { id: id })
+                .getMany();
         };
-        this.getPhuong = async () => {
-            return await this.phuongRepository.find();
+        this.getPhuong = async (id) => {
+            return await data_source_1.AppDataSource.createQueryBuilder()
+                .select("phuong")
+                .from(phuong_1.Phuong, "phuong")
+                .where("phuong.quanId = :id", { id: id })
+                .getMany();
+        };
+        this.getPhuongDetail = async (id) => {
+            return await data_source_1.AppDataSource.createQueryBuilder()
+                .select("phuong")
+                .from(phuong_1.Phuong, "phuong")
+                .where("phuong.id = :id", { id: id })
+                .innerJoinAndSelect("phuong.quan", "quan")
+                .innerJoinAndSelect("quan.city", "city")
+                .getOne();
         };
         this.cityRepository = data_source_1.AppDataSource.getRepository(city_1.City);
         this.quanRepository = data_source_1.AppDataSource.getRepository(quan_1.Quan);

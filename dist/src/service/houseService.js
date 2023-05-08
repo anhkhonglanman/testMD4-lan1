@@ -10,7 +10,14 @@ class HouseService {
                     phuong: true,
                     quan: true,
                     city: true,
-                    image: true
+                    image: true,
+                    user: true
+                },
+                select: {
+                    user: {
+                        name: true,
+                        phoneNumber: true
+                    }
                 }
             });
             return houses;
@@ -18,9 +25,11 @@ class HouseService {
         this.findHouseById = async (id) => {
             return await data_source_1.AppDataSource.createQueryBuilder()
                 .select("house")
+                .addSelect("user.name")
+                .addSelect("user.phoneNumber")
                 .from(house_1.House, "house")
                 .leftJoinAndSelect("house.image", "image")
-                .innerJoinAndSelect("house.user", "user")
+                .innerJoin("house.user", "user")
                 .where("house.id = :id", { id: id })
                 .getOne();
         };
@@ -51,7 +60,7 @@ class HouseService {
             newHouse.description = house.description;
             newHouse.user = id;
             newHouse.phuong = house.phuong;
-            newHouse.quan = house.quanId;
+            newHouse.quan = house.quan;
             newHouse.city = house.city;
             await this.houseRepository.save(newHouse);
             return newHouse;

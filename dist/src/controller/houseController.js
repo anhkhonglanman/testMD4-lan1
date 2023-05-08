@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const houseService_1 = __importDefault(require("../service/houseService"));
 const imageService_1 = __importDefault(require("../service/imageService"));
+const addressService_1 = __importDefault(require("../service/addressService"));
 class HouseController {
     constructor() {
         this.showAllHouse = async (req, res) => {
@@ -36,6 +37,14 @@ class HouseController {
             let id = req['decode']['id'];
             let data = req.body;
             let imageData = data.image;
+            console.log(data.phuong);
+            let phuongDetail = await addressService_1.default.getPhuongDetail(data.phuong);
+            console.log("--phuongDetail:", phuongDetail);
+            data.quan = phuongDetail.quan.id;
+            console.log(data.quan);
+            data.city = phuongDetail.quan.city.id;
+            console.log(data.city);
+            console.log("data to create house:", data);
             let house = await houseService_1.default.addHouse(data, id);
             let idHouse = house.id;
             await imageService_1.default.addImage(idHouse, imageData);
