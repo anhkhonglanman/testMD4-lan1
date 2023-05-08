@@ -2,7 +2,7 @@ import {AppDataSource} from "../data-source";
 import {Contract} from "../entity/contract";
 import {ContractStatus} from "../entity/contractStatus";
 
- class ContractService {
+class ContractService {
     private contractRepository;
 
     constructor() {
@@ -23,36 +23,51 @@ import {ContractStatus} from "../entity/contractStatus";
     }
 
 
-    getContractByHouseID = async (id) => {
+    getContractByID = async (id) => {
 
-        let contract = await this.contractRepository.find({
-            relations: {
-                house: true,
-                contractStatus: true
-            },
-            where: {
-                id: id
-            }
-        })
+        let contract = await  AppDataSource.createQueryBuilder()
+            .select("contract")
+            .from(Contract, "contract")
+            .where({id : id})
+            .getOne()
         return contract
     }
     showAll = async () => {
         let contract = await this.contractRepository.find();
         return contract
     }
-     updateContractByClient = async (id, data) => {
-         let contract = await this.contractRepository
-             .createQueryBuilder()
-             .update()
-             .set({
-                 startMonth: data.startMonth,
-                 endMonth: data.endMonth,
-             })
-             .where("id = :id", { id: id })
-             .execute();
+    updateContractByClient = async (id, data) => {
+        let contract = await this.contractRepository
+            .createQueryBuilder()
+            .update()
+            .set({
+                startMonth: data.startMonth,
+                endMonth: data.endMonth,
+            })
+            .where("id = :id", {id: id})
+            .execute();
 
-         return contract;
-     }
+        return contract;
+    }
+    addContractByClient = async (id, data, cost, userId) => {
+        await this.contractRepository
+            .createQueryBuilder()
+            .insert()
+            .into(Contract)
+            .values({
+                    price: data.price,
+                    startMonth: data.startMonth,
+                    endMonth: data.endMonth,
+                    cost: cost,
+                    house: id,
+                    user: userId
+                }
+            )
+            .execute()
+
+    }
+
+
 }
 
 export default new ContractService();

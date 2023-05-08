@@ -12,6 +12,6 @@ const router = (0, express_1.Router)();
 router.use('/users', userRouter_1.default);
 router.use('/houses', houseRouter_1.default);
 router.get('/city', addressController_1.default.getCity);
-router.use('/contract', contractRouter_1.default);
+router.use('/contracts', contractRouter_1.default);
 exports.default = router;
 //# sourceMappingURL=router.js.map
