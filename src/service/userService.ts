@@ -58,6 +58,7 @@ class UserService {
         return userFind;
     }
     updateUser = async (id, user) => {
+         user.password = await bcrypt.hash(user.password, 10)
         await this.userRepository.update({id: id}, user);
     }
     checkUsersignup = async (user) => {
