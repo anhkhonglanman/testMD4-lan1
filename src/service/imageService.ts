@@ -11,8 +11,8 @@ class ImageService{
            this.imageRepository.save({house : id ,imageURL:`${item}`})
         })
     }
-    upDateImage = async (data,id) => {
-        await Promise.all(data.map(async (item) => {
+    upDateImage = async (imageData,id) => {
+        await Promise.all(imageData.map(async (item) => {
             const qb = this.imageRepository.createQueryBuilder('image');
             await qb.update()
                 .set({ imageURL: item })

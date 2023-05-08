@@ -15,6 +15,15 @@ class HouseService {
             });
             return houses;
         };
+        this.findHouseById = async (id) => {
+            return await data_source_1.AppDataSource.createQueryBuilder()
+                .select("house")
+                .from(house_1.House, "house")
+                .leftJoinAndSelect("house.image", "image")
+                .innerJoinAndSelect("house.user", "user")
+                .where("house.id = :id", { id: id })
+                .getOne();
+        };
         this.findHouse = async (query) => {
             const qb = this.houseRepository.createQueryBuilder('house')
                 .where('house.price >= :priceLow', { priceLow: query.priceLow })
@@ -59,13 +68,6 @@ class HouseService {
                 city: house.cityId,
             })
                 .execute();
-        };
-        this.findHouseById = async (id) => {
-            let house = await this.houseRepository.query(`select *
-                                                 from house
-                                                          join image i on house.id = i.houseId
-                                                 where houseId = ${id}`);
-            return house[0];
         };
         this.delete = async (id) => {
             if (id) {

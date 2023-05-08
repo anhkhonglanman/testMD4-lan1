@@ -54,8 +54,10 @@ class HouseController {
 
     }
     showHouseById = async (req: Request, res: Response)=>{
-        let id=req.params.id
+        let id = parseInt(req.params.id)
+        console.log(id)
         let house= await houseService.findHouseById(id);
+        console.log(house)
         res.status(200).json(house)
     }
     delete = async (req: Request, res: Response)=>{
