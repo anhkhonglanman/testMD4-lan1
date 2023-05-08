@@ -4,7 +4,7 @@ import houseController from "./houseController";
 import houseService from "../service/houseService";
 
 class ContractController {
-    getContract = async (req: Request, res: Response) => {
+    getContractByIdUser = async (req: Request, res: Response) => {
         let id = req['decode'].id
         let contract = await contractService.getContractByUserID(id);
         res.status(201).json(contract);
