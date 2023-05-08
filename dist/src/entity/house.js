@@ -64,6 +64,12 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => city_1.City, (city) => city.house),
     __metadata("design:type", city_1.City)
 ], House.prototype, "city", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        default: 0
+    }),
+    __metadata("design:type", Boolean)
+], House.prototype, "isRemoved", void 0);
 House = __decorate([
     (0, typeorm_1.Entity)()
 ], House);

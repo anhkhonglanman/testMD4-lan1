@@ -33,4 +33,8 @@ export class House {
     quan: Quan;
     @ManyToOne(() => City, (city) => city.house)
     city: City;
+    @Column({
+        default: 0
+    })
+    isRemoved: boolean;
 }

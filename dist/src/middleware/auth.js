@@ -15,7 +15,7 @@ const auth = (req, res, next) => {
                 if (err) {
                     res.status(401).json({
                         error: err.message,
-                        message: "khong co quyen+++++"
+                        message: "ban chua dang nhap"
                     });
                 }
                 else {
@@ -26,13 +26,13 @@ const auth = (req, res, next) => {
         }
         else {
             res.status(401).json({
-                message: "khong co quyen"
+                message: "ban chua dang nhap"
             });
         }
     }
     else {
         res.status(401).json({
-            message: "khong co quyen"
+            message: "ban chua dang nhap"
         });
     }
 };

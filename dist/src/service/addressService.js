@@ -10,10 +10,10 @@ class AddressService {
             return await this.cityRepository.find();
         };
         this.getQuan = async () => {
-            return await this.cityRepository.find();
+            return await this.quanRepository.find();
         };
         this.getPhuong = async () => {
-            return await this.cityRepository.find();
+            return await this.phuongRepository.find();
         };
         this.cityRepository = data_source_1.AppDataSource.getRepository(city_1.City);
         this.quanRepository = data_source_1.AppDataSource.getRepository(quan_1.Quan);

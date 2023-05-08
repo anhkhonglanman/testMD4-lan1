@@ -19,10 +19,10 @@ class AddressService {
         return await this.cityRepository.find()
     }
     getQuan = async () => {
-        return await this.cityRepository.find()
+        return await this.quanRepository.find()
     }
     getPhuong = async () => {
-        return await this.cityRepository.find()
+        return await this.phuongRepository.find()
     }
 
 }

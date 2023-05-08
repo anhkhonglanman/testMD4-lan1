@@ -17,4 +17,5 @@ export declare class House {
     houseStatus: HouseStatus;
     quan: Quan;
     city: City;
+    isRemoved: boolean;
 }

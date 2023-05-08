@@ -15,30 +15,34 @@ class HouseService {
             });
             return houses;
         };
+        this.findHouseById = async (id) => {
+            return await data_source_1.AppDataSource.createQueryBuilder()
+                .select("house")
+                .from(house_1.House, "house")
+                .leftJoinAndSelect("house.image", "image")
+                .innerJoinAndSelect("house.user", "user")
+                .where("house.id = :id", { id: id })
+                .getOne();
+        };
         this.findHouse = async (query) => {
+            const qb = this.houseRepository.createQueryBuilder('house')
+                .where('house.price >= :priceLow', { priceLow: query.priceLow })
+                .orWhere('house.price <= :priceHigh', { priceHigh: query.priceHigh })
+                .orWhere('house.area >= :areaLow', { areaLow: query.areaHigh })
+                .orWhere('house.area <= :areaHigh', { areaHigh: query.areaLow });
             if (query.phuongId) {
-                return await this.houseRepository.createQueryBuilder("house")
-                    .where("house.price >= :priceLow", { priceLow: query.priceLow })
-                    .andWhere(`house.phuongId = :phuongId`, { phuongId: query.phuongId })
-                    .getMany();
+                qb.andWhere(`house.phuongId = :phuongId`, { phuongId: query.phuongId });
+                await qb.getMany();
             }
             else if (query.quanId) {
-                return await this.houseRepository.createQueryBuilder("house")
-                    .where("house.price >= :priceLow", { priceLow: query.priceLow })
-                    .andWhere(`house.quanId = :quanId`, { quanId: query.quanId })
-                    .getMany();
+                qb.andWhere(`house.quanId = :quanId`, { quanId: query.quanId });
+                await qb.getMany();
             }
             else if (query.cityId) {
-                return await this.houseRepository.createQueryBuilder("house")
-                    .where("house.price >= :priceLow", { priceLow: query.priceLow })
-                    .andWhere(`house.cityId = :cityId`, { cityId: query.cityId })
-                    .getMany();
+                qb.andWhere(`house.cityId = :cityId`, { cityId: query.cityId });
+                await qb.getMany();
             }
-            else {
-                return await this.houseRepository.createQueryBuilder("house")
-                    .where("house.price >= :priceLow", { priceLow: query.priceLow })
-                    .getMany();
-            }
+            return await qb.getMany();
         };
         this.addHouse = async (house, id) => {
             let newHouse = new house_1.House();
@@ -65,17 +69,13 @@ class HouseService {
             })
                 .execute();
         };
-        this.findHouseById = async (id) => {
-            return await data_source_1.AppDataSource.createQueryBuilder()
-                .select("house")
-                .from(house_1.House, "house")
-                .leftJoinAndSelect("house.image", "image")
-                .where("house.id = :id", { id: id })
-                .getOne();
-        };
         this.delete = async (id) => {
             if (id) {
-                await this.houseRepository.delete({ id: id });
+                await this.houseRepository.createQueryBuilder()
+                    .update(house_1.House)
+                    .set({ isRemoved: true })
+                    .where("id = :id", { id: id })
+                    .execute();
             }
             else {
                 return 'khong ton tai';
