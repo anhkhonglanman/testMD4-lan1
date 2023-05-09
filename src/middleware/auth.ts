@@ -9,10 +9,12 @@ export const auth = (req, res, next) => {
                 if (err) {
                     res.status(401).json({
                         error: err.message,
-                        message: "khong co quyen"
+                        message: "khong co quyen",
+                        success: false
                     })
                 } else {
                     req.decode = payload;
+
                     return next();
                 }
             })

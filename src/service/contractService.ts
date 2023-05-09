@@ -1,6 +1,7 @@
 import {AppDataSource} from "../data-source";
 import {Contract} from "../entity/contract";
 import {ContractStatus} from "../entity/contractStatus";
+import session from "express-session";
 
 class ContractService {
     private contractRepository;
@@ -24,11 +25,14 @@ class ContractService {
 
 
     getContractByID = async (id) => {
-
-        let contract = await  AppDataSource.createQueryBuilder()
+        let contract = await AppDataSource.createQueryBuilder()
             .select("contract")
+            .addSelect("user.id")
+            .addSelect('contract.id')
             .from(Contract, "contract")
-            .where({id : id})
+            .innerJoin("contract.user", "user")
+            .innerJoinAndSelect("contract.status", "Status")
+            .where({id: id})
             .getOne()
         return contract
     }
@@ -65,6 +69,19 @@ class ContractService {
             )
             .execute()
 
+    }
+    cancelContractByUser = async (id) => {
+        let contract = await this.contractRepository
+            .createQueryBuilder()
+            .update()
+            .set( {
+                status:4
+            })
+            .where("id = :id", {id: id})
+            .execute();
+
+
+        return contract;
     }
 
 

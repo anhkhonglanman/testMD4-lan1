@@ -43,25 +43,7 @@ class HouseService {
                 .getMany()
         }
 
-
-        // return await this.houseRepository.createQueryBuilder("house")
-        //     .where("house.price >= :priceLow", {priceLow: query.priceLow})
-        //     .andWhere(`house.phuongId ${(query.phuongId) ? "=" : ">"} :phuongId`,
-        //         {phuongId: (query.phuongId) ? query.phuongId : 0})
-        //
-        //     .getMany()
-
     }
-    // createHouse = async (house) => {
-    //     console.log(house)
-    //     let newHouse = new House();
-    //     newHouse.price = house.price;
-    //     newHouse.description = house.description;
-    //     newHouse.user = house.userid;
-    //     newHouse.phuong = house.phuong
-    //     newHouse.houseStatus = house.status;
-    //     await this.houseRepository.save(newHouse);
-    // }
 
     addHouse = async (house, id) => {
         let newHouse = new House();
@@ -89,7 +71,7 @@ class HouseService {
             .execute();
     }
     findHouseById = async (id) => {
-        return  await AppDataSource.createQueryBuilder()
+        return  await this.houseRepository.createQueryBuilder("house")
             .select("house")
             .from(House, "house")
             .innerJoinAndSelect("house.user","user")
@@ -106,12 +88,6 @@ class HouseService {
         }
 
 
-    }
-    findHouseByIdOwner = async (id) => {
-
-        return await this.houseRepository.query(`select *
-                                                 from house
-                                                 where userId = ${id}`)
     }
 
 

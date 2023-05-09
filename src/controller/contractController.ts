@@ -25,18 +25,18 @@ class ContractController {
         res.status(201).json(contract);
     }
     createContractByClient = async (req: Request, res: Response) => {
-        let userId= req['decode'].id
+        let userId = req['decode'].id
         let houseId = req.body.houseId;
         console.log(houseId);
         console.log(userId)
         let house = await houseService.findHouseById(houseId);
-        let price:number = house.price;
+        let price: number = house.price;
         let startMonth = req.body.startMonth
         let endMonth = req.body.endMonth
-        let month:number = this.tinhSoThang(startMonth, endMonth);
+        let month: number = this.tinhSoThang(startMonth, endMonth);
         let cost = month * price
-        await contractService.addContractByClient(houseId, req.body, cost,parseInt(userId))
-         res.status(201).json("them hop dong  thanh cong");
+        await contractService.addContractByClient(houseId, req.body, cost, parseInt(userId))
+        res.status(201).json("them hop dong  thanh cong");
     }
     tinhSoThang = (thangBatDau, thangKetThuc) => {
         let thang1 = new Date(thangBatDau);
@@ -45,6 +45,26 @@ class ContractController {
         soThang -= thang1.getMonth();
         soThang += thang2.getMonth();
         return soThang <= 0 ? 0 : soThang;
+    }
+    cancelContract = async (req: Request, res: Response) => {
+        let id = req.params.id;
+        let contract = await contractService.getContractByID(id);
+        let startmonth = contract.startMonth.getMonth() + 1;
+        let year = contract.startMonth.getFullYear();
+        let date = new Date()
+        let mm = date.getMonth() + 1;
+        let yearNow = date.getFullYear();
+        if (year === yearNow) {
+            if (startmonth < mm) {
+                await contractService.cancelContractByUser(id);
+                res.status(201).json(" huy hop dong  thanh cong");
+            } else {
+                res.status(201).json(" huy hop dong khong thanh cong");
+            }
+        } else {
+            res.status(201).json(" huy hop dong  thanh cong");
+        }
+
     }
 }
 
