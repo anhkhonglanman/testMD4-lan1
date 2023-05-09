@@ -53,18 +53,19 @@ class ContractService {
 
         return contract;
     }
-    addContractByClient = async (id, data, cost, userId) => {
+    addContractByClient = async (id, data, cost, userId, price) => {
         await this.contractRepository
             .createQueryBuilder()
             .insert()
             .into(Contract)
             .values({
-                    price: data.price,
+                    price: price,
                     startMonth: data.startMonth,
                     endMonth: data.endMonth,
                     cost: cost,
                     house: id,
-                    user: userId
+                    user: userId,
+                    status: 3
                 }
             )
             .execute()
@@ -74,8 +75,8 @@ class ContractService {
         let contract = await this.contractRepository
             .createQueryBuilder()
             .update()
-            .set( {
-                status:4
+            .set({
+                status: 4
             })
             .where("id = :id", {id: id})
             .execute();

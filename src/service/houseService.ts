@@ -72,8 +72,6 @@ class HouseService {
     }
     findHouseById = async (id) => {
         return  await this.houseRepository.createQueryBuilder("house")
-            .select("house")
-            .from(House, "house")
             .innerJoinAndSelect("house.user","user")
             .leftJoinAndSelect("house.image", "image")
             .where("house.id = :id", {id: id})

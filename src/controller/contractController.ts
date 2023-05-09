@@ -27,15 +27,14 @@ class ContractController {
     createContractByClient = async (req: Request, res: Response) => {
         let userId = req['decode'].id
         let houseId = req.body.houseId;
-        console.log(houseId);
-        console.log(userId)
         let house = await houseService.findHouseById(houseId);
         let price: number = house.price;
+        console.log(houseId)
         let startMonth = req.body.startMonth
         let endMonth = req.body.endMonth
         let month: number = this.tinhSoThang(startMonth, endMonth);
-        let cost = month * price
-        await contractService.addContractByClient(houseId, req.body, cost, parseInt(userId))
+        let cost = month * price;
+        await contractService.addContractByClient(houseId, req.body, cost, parseInt(userId),price)
         res.status(201).json("them hop dong  thanh cong");
     }
     tinhSoThang = (thangBatDau, thangKetThuc) => {
